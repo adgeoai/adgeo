@@ -149,7 +149,7 @@ nodes.leadForm.addEventListener('submit', async (event) => {
       <div class="errorBox">
         <strong>AI 生成暂不可用</strong>
         <p>${escapeHtml(error.message)}</p>
-        <p>本地静态服务器无法运行 Cloudflare Pages Functions。部署到 Cloudflare Pages 后，请添加 OPENAI_API_KEY 环境变量，再访问线上地址测试。</p>
+        <p>请确认线上 Worker 的变量和机密中已经添加 OPENAI_API_KEY，并在保存后部署更改。可以访问 /api/health 检查 hasOpenAIKey 是否为 true。</p>
       </div>
     `;
   }

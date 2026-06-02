@@ -18,6 +18,15 @@ export default {
       return handleGenerate(request, env);
     }
 
+    if (url.pathname === '/api/health') {
+      return jsonResponse({
+        ok: true,
+        hasOpenAIKey: Boolean(env.OPENAI_API_KEY),
+        model: env.OPENAI_MODEL || 'gpt-4.1-mini',
+        baseUrl: env.OPENAI_BASE_URL || DEFAULT_OPENAI_BASE_URL,
+      });
+    }
+
     return env.ASSETS.fetch(request);
   },
 };

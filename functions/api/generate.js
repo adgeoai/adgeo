@@ -40,6 +40,15 @@ export async function onRequestPost(context) {
   }
 }
 
+export async function onRequestGet(context) {
+  return jsonResponse({
+    ok: true,
+    hasOpenAIKey: Boolean(context.env.OPENAI_API_KEY),
+    model: context.env.OPENAI_MODEL || 'gpt-4.1-mini',
+    baseUrl: context.env.OPENAI_BASE_URL || DEFAULT_OPENAI_BASE_URL,
+  });
+}
+
 function normalizeBrief(payload) {
   const website = String(payload.website || '').trim();
   if (!/^https?:\/\/[^\s/$.?#].[^\s]*$/i.test(website)) {
