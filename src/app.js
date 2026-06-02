@@ -241,6 +241,108 @@ function applyEnglishStaticCopy() {
     cards[1].querySelector('strong').textContent = 'Custom Quote';
   }
 
+  const proofTitle = document.querySelector('.proofSection .sectionTitle');
+  if (proofTitle) {
+    proofTitle.querySelector('.eyebrow').textContent = 'Delivery Samples';
+    proofTitle.querySelector('h2').textContent = 'What Customers Can Review';
+    proofTitle.querySelector('p').textContent =
+      'The following are anonymized sample structures and report previews. Real before/after screenshots will replace them after the first client cohort.';
+  }
+  const caseCards = document.querySelectorAll('.caseCard');
+  const caseTexts = [
+    ['Anonymous Sample / DTC Store', 'From product pages only to search- and AI-readable structure', 'Before', 'Missing FAQ, Schema, brand entities, and content entry points.', 'After', 'Added Title, Meta, FAQ, Schema, llms.txt, and content calendar.'],
+    ['Anonymous Sample / SaaS Tool', 'Turn feature pages into AI-citable content', 'Before', 'AI could not clearly identify category, audience, or differentiation.', 'After', 'Generated entity definition, comparison pages, FAQ, and citation source list.'],
+    ['Ad Creative Sample', 'Paid media is delivered separately from SEO/GEO', 'Input', 'Customer submits product site and target market.', 'Output', 'Ad copy, UGC scripts, creative directions, and safer compliance wording.'],
+  ];
+  caseCards.forEach((card, index) => {
+    const text = caseTexts[index];
+    if (!text) return;
+    card.querySelector('small').textContent = text[0];
+    card.querySelector('h3').textContent = text[1];
+    const cells = card.querySelectorAll('.beforeAfter div');
+    if (cells[0]) {
+      cells[0].querySelector('span').textContent = text[2];
+      cells[0].querySelector('p').textContent = text[3];
+    }
+    if (cells[1]) {
+      cells[1].querySelector('span').textContent = text[4];
+      cells[1].querySelector('p').textContent = text[5];
+    }
+  });
+
+  const reportPreview = document.querySelector('.reportPreview .sectionTitle');
+  if (reportPreview) {
+    reportPreview.querySelector('.eyebrow').textContent = 'Report Preview';
+    reportPreview.querySelector('h2').textContent = 'Optimized Deliverables, Not Just Suggestions';
+  }
+  const valueList = document.querySelector('.valueList');
+  if (valueList) {
+    valueList.querySelector('h3').textContent = 'Why GEO Matters';
+    const items = valueList.querySelectorAll('li');
+    [
+      'Help ChatGPT, Perplexity, and Google AI Overviews understand the customer brand category.',
+      'Improve the chance of AI answer citations through FAQ, comparison pages, Schema, and third-party citation sources.',
+      'Review monthly AI search visibility and continue optimizing pages and sources.',
+      'Combine traditional SEO indexing with AI search visibility growth.',
+    ].forEach((text, index) => {
+      if (items[index]) items[index].textContent = text;
+    });
+  }
+
+  const deliveryTitle = document.querySelector('.deliverableSection .sectionTitle');
+  if (deliveryTitle) {
+    deliveryTitle.querySelector('.eyebrow').textContent = 'Quarterly Delivery Standard';
+    deliveryTitle.querySelector('h2').textContent = 'What Monthly Reviews Include';
+  }
+  const deliveryCards = document.querySelectorAll('.deliverableGrid article');
+  [
+    ['Month 1', 'Omnichannel scoring, issue diagnosis, keyword map, Title/Meta/H1/H2 optimization, FAQ, Schema, llms.txt, and content calendar.'],
+    ['Month 2', 'Review Google/Bing indexing, AI search visibility, content gaps, page structure, and update FAQ/comparison/citation source recommendations.'],
+    ['Month 3', 'Review score changes, deliver before/after summary, and update the next-quarter content and AI visibility optimization plan.'],
+  ].forEach(([title, body], index) => {
+    if (deliveryCards[index]) {
+      deliveryCards[index].querySelector('strong').textContent = title;
+      deliveryCards[index].querySelector('p').textContent = body;
+    }
+  });
+
+  const pricingTitle = document.querySelector('.pricingDetail .sectionTitle');
+  if (pricingTitle) {
+    pricingTitle.querySelector('.eyebrow').textContent = 'Transparent Pricing';
+    pricingTitle.querySelector('h2').textContent = 'SEO/GEO and Ad Creative Are Priced Separately';
+  }
+  const priceCards = document.querySelectorAll('.pricingGrid article');
+  [
+    ['SEO/GEO Quarterly', '$599', '3 months, one monthly review, suitable for validating SEO and AI-search fundamentals.'],
+    ['SEO/GEO 6-Month', '$1100', '6 months, suitable for ongoing content updates, indexing tracking, and citation source building.'],
+    ['SEO/GEO Annual', '$2000', '12 months, suitable for yearly maintenance, content calendar iteration, and benchmark development.'],
+    ['Ad Creative', 'From $299', 'Separate quote for ad copy, UGC scripts, creative directions, and compliance checks. Media spend and ad accounts are not included.'],
+  ].forEach(([title, price, body], index) => {
+    if (priceCards[index]) {
+      priceCards[index].querySelector('h3').textContent = title;
+      priceCards[index].querySelector('strong').textContent = price;
+      priceCards[index].querySelector('p').textContent = body;
+    }
+  });
+
+  const faqTitle = document.querySelector('.faqSection .sectionTitle');
+  if (faqTitle) {
+    faqTitle.querySelector('.eyebrow').textContent = 'FAQ';
+    faqTitle.querySelector('h2').textContent = 'Common Questions Before Purchase';
+  }
+  const faqs = document.querySelectorAll('.faqGrid details');
+  [
+    ['How fast is the first delivery?', 'The first SEO/GEO score and optimized draft are delivered within 48 hours after payment and project information are confirmed.'],
+    ['What does the monthly review include?', 'Google/Bing indexing, AI-search visibility, brand entity wording, FAQ/Schema status, content gaps, and next-step optimization actions.'],
+    ['Do you guarantee rankings or AI citations?', 'No fixed ranking or citation count is guaranteed. We deliver executable optimization, monitoring, and iteration to improve the chance of search and AI discovery.'],
+    ['Is ad delivery included in SEO/GEO plans?', 'No. Ad creative is a separate service starting at $299 and does not include ad accounts, account opening, media spend, or managed buying.'],
+  ].forEach(([question, answer], index) => {
+    if (faqs[index]) {
+      faqs[index].querySelector('summary').textContent = question;
+      faqs[index].querySelector('p').textContent = answer;
+    }
+  });
+
   const metrics = document.querySelectorAll('.metric span');
   ['Quarterly plan, 3 months, one review per month', '6-month plan, one review per month', 'Annual plan, 12 monthly reviews'].forEach((text, index) => {
     if (metrics[index]) metrics[index].textContent = text;

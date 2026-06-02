@@ -352,6 +352,194 @@ h1 {
   font-size: 20px;
 }
 
+.caseGrid,
+.reportPreviewGrid,
+.deliverableGrid,
+.pricingGrid,
+.faqGrid {
+  display: grid;
+  gap: 16px;
+}
+
+.caseGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.caseCard,
+.reportMock,
+.valueList,
+.deliverableGrid article,
+.pricingGrid article,
+.faqGrid details {
+  border: 1px solid rgba(24, 34, 31, 0.1);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 16px 38px rgba(34, 45, 40, 0.08);
+}
+
+.caseCard {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+}
+
+.caseCard small {
+  color: #b4452a;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.caseCard h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.beforeAfter {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.beforeAfter div {
+  min-height: 130px;
+  padding: 14px;
+  border-radius: 8px;
+  background: #f4f7f1;
+}
+
+.beforeAfter span {
+  display: block;
+  color: #6f7d78;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.beforeAfter strong {
+  display: block;
+  margin: 8px 0;
+  color: #196c5d;
+  font-size: 28px;
+}
+
+.beforeAfter p {
+  margin: 0;
+  color: #52605c;
+  font-size: 14px;
+}
+
+.reportPreviewGrid {
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.7fr);
+  align-items: stretch;
+}
+
+.reportMock,
+.valueList {
+  padding: 24px;
+}
+
+.mockTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(24, 34, 31, 0.1);
+}
+
+.mockTop span {
+  color: #52605c;
+  font-weight: 900;
+}
+
+.mockTop strong {
+  color: #196c5d;
+  font-size: 32px;
+}
+
+.mockRows {
+  display: grid;
+  gap: 12px;
+}
+
+.mockRows p {
+  margin: 0;
+  padding: 14px;
+  border-radius: 8px;
+  background: #f4f7f1;
+  color: #3e4a46;
+}
+
+.mockRows b {
+  display: block;
+  margin-bottom: 5px;
+  color: #18221f;
+}
+
+.valueList h3 {
+  margin-bottom: 14px;
+  font-size: 26px;
+}
+
+.valueList ul,
+.faqGrid p {
+  margin: 0;
+  color: #52605c;
+}
+
+.valueList li + li {
+  margin-top: 9px;
+}
+
+.deliverableGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.pricingGrid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.deliverableGrid article,
+.pricingGrid article {
+  padding: 22px;
+}
+
+.deliverableGrid strong,
+.pricingGrid strong {
+  display: block;
+  margin-bottom: 10px;
+  color: #196c5d;
+  font-size: 28px;
+}
+
+.pricingGrid h3 {
+  margin-bottom: 8px;
+}
+
+.deliverableGrid p,
+.pricingGrid p {
+  margin: 0;
+  color: #52605c;
+}
+
+.faqGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.faqGrid details {
+  padding: 18px;
+}
+
+.faqGrid summary {
+  cursor: pointer;
+  color: #18221f;
+  font-weight: 900;
+}
+
+.faqGrid p {
+  margin-top: 10px;
+}
+
 .metric {
   min-height: 116px;
   padding: 22px;
@@ -588,6 +776,11 @@ textarea:focus {
   .formGrid,
   .compactStats,
   .serviceCards,
+  .caseGrid,
+  .reportPreviewGrid,
+  .deliverableGrid,
+  .pricingGrid,
+  .faqGrid,
   .steps {
     grid-template-columns: 1fr;
   }
