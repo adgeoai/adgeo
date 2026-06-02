@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "python3 -m http.server 4173",
-    "build": "rm -rf dist && mkdir -p dist && cp index.html admin.html dist/ && cp -R src dist/",
+    "build": "rm -rf dist && mkdir -p dist && cp index.html admin.html en.html dist/ && cp -R src dist/",
     "preview": "python3 -m http.server 4173"
   },
   "dependencies": {},

@@ -64,6 +64,7 @@ function normalizeBrief(payload) {
 
   return {
     website,
+    outputLanguage: String(payload.outputLanguage || 'Chinese'),
     serviceType: String(payload.serviceType || 'SEO/GEO 全域优化'),
     country: String(payload.country || '美国'),
     platform: String(payload.platform || 'TikTok'),
@@ -188,6 +189,10 @@ SEO/GEO 套餐：
 两个板块必须分开：
 - 如果 serviceType 是“SEO/GEO 全域优化”，只输出 SEO/GEO 评分、问题、优化后交付物和月度审核计划；不要输出广告投放素材作为核心交付。
 - 如果 serviceType 是“AI 广告投放素材”，只输出广告投放素材、创意、视频脚本、A/B 测试和广告合规；不要输出 SEO/GEO 周期套餐作为核心交付。
+
+语言要求：
+- 如果 outputLanguage 是 English，所有 JSON 字段值必须使用英文。
+- 如果 outputLanguage 是 Chinese，所有 JSON 字段值必须使用中文。
 
 你必须基于客户提交的网站和需求，直接产出可交付的优化报告，而不是解释你会怎么做。报告必须先评分和找问题，再给出优化后的交付物，客户可以逐项审查。
 
