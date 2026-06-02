@@ -729,6 +729,35 @@ textarea:focus {
   gap: 14px;
 }
 
+.scoreGrid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.scoreTile {
+  min-height: 96px;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  padding: 14px;
+  border-radius: 8px;
+  background: #f4f7f1;
+  text-align: center;
+}
+
+.scoreTile strong {
+  color: #196c5d;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.scoreTile span {
+  color: #52605c;
+  font-size: 13px;
+  font-weight: 800;
+}
+
 .reportBlock {
   padding: 14px;
   border-radius: 8px;
@@ -780,6 +809,7 @@ textarea:focus {
   border-radius: 8px;
   border: 1px solid rgba(24, 34, 31, 0.08);
   background: #fff;
+  overflow-wrap: anywhere;
 }
 
 .miniCard strong {
@@ -820,7 +850,8 @@ textarea:focus {
   }
 
   .reportBlocks,
-  .miniCards {
+  .miniCards,
+  .scoreGrid {
     grid-template-columns: 1fr;
   }
 

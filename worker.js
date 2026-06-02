@@ -173,7 +173,11 @@ function parseJsonReport(text) {
 
 function buildPrompt(brief, websiteText) {
   return `
-你是一个“AI海外增长投放专家系统”，服务对象是独立站、海外游戏、App、SaaS、跨境电商和出海企业。你必须基于客户提交的网站和需求，直接产出可交付的增长报告，而不是解释你会怎么做。
+你是一个“AI 全域 SEO/GEO 优化专家系统”，服务对象是独立站、海外游戏、App、SaaS、跨境电商和出海企业。
+
+你的收费产品是：SEO/GEO 全域优化包，价格 599 美金，USDT 优先结算。
+
+你必须基于客户提交的网站和需求，直接产出可交付的优化报告，而不是解释你会怎么做。报告必须先评分和找问题，再给出优化后的交付物，客户可以逐项审查。
 
 合规边界：
 - 可以提供广告政策风险检查、拒审原因分析、落地页合规建议、账户结构建议、申诉文案辅助。
@@ -193,6 +197,26 @@ ${websiteText}
     "targetMarket": "目标市场总结",
     "priority": "优先执行建议",
     "riskLevel": "低/中/高"
+  },
+  "seoGeoAudit": {
+    "packageName": "SEO/GEO 全域优化包",
+    "price": "$599 USDT",
+    "scores": {
+      "overall": 0,
+      "seo": 0,
+      "geo": 0,
+      "technical": 0,
+      "content": 0,
+      "authority": 0
+    },
+    "issues": [
+      {"area": "SEO/GEO/技术/内容/可信度", "problem": "具体问题", "impact": "影响", "priority": "高/中/低"},
+      {"area": "SEO/GEO/技术/内容/可信度", "problem": "具体问题", "impact": "影响", "priority": "高/中/低"},
+      {"area": "SEO/GEO/技术/内容/可信度", "problem": "具体问题", "impact": "影响", "priority": "高/中/低"},
+      {"area": "SEO/GEO/技术/内容/可信度", "problem": "具体问题", "impact": "影响", "priority": "高/中/低"},
+      {"area": "SEO/GEO/技术/内容/可信度", "problem": "具体问题", "impact": "影响", "priority": "高/中/低"}
+    ],
+    "priorityFixes": ["优先修复1", "优先修复2", "优先修复3", "优先修复4", "优先修复5"]
   },
   "productAnalysis": {
     "productType": "产品类型",
@@ -259,6 +283,33 @@ ${websiteText}
     "schema": ["Organization", "Product", "FAQPage"],
     "citationSources": ["建议引用源1", "建议引用源2", "建议引用源3"]
   },
+  "optimizedDeliverables": {
+    "homepageTitle": "优化后的首页 SEO Title，必须可直接使用",
+    "homepageMetaDescription": "优化后的首页 Meta Description，必须可直接使用",
+    "homepageH1": "优化后的 H1，必须可直接使用",
+    "h2Structure": ["优化后的 H2 1", "优化后的 H2 2", "优化后的 H2 3", "优化后的 H2 4"],
+    "faqAnswers": [
+      {"question": "优化后 FAQ 问题1", "answer": "优化后 FAQ 答案1"},
+      {"question": "优化后 FAQ 问题2", "answer": "优化后 FAQ 答案2"},
+      {"question": "优化后 FAQ 问题3", "answer": "优化后 FAQ 答案3"},
+      {"question": "优化后 FAQ 问题4", "answer": "优化后 FAQ 答案4"},
+      {"question": "优化后 FAQ 问题5", "answer": "优化后 FAQ 答案5"}
+    ],
+    "schemaDrafts": [
+      {"type": "Organization", "description": "用途说明", "jsonLd": "压缩后的 JSON-LD 草案"},
+      {"type": "Product", "description": "用途说明", "jsonLd": "压缩后的 JSON-LD 草案"},
+      {"type": "FAQPage", "description": "用途说明", "jsonLd": "压缩后的 JSON-LD 草案"}
+    ],
+    "llmsTxt": "可直接放到 /llms.txt 的草案内容",
+    "contentCalendar": [
+      {"title": "内容标题1", "keyword": "目标关键词", "intent": "搜索意图", "format": "博客/FAQ/对比页/榜单页"},
+      {"title": "内容标题2", "keyword": "目标关键词", "intent": "搜索意图", "format": "博客/FAQ/对比页/榜单页"},
+      {"title": "内容标题3", "keyword": "目标关键词", "intent": "搜索意图", "format": "博客/FAQ/对比页/榜单页"},
+      {"title": "内容标题4", "keyword": "目标关键词", "intent": "搜索意图", "format": "博客/FAQ/对比页/榜单页"},
+      {"title": "内容标题5", "keyword": "目标关键词", "intent": "搜索意图", "format": "博客/FAQ/对比页/榜单页"}
+    ]
+  },
+  "reviewChecklist": ["客户审查项1", "客户审查项2", "客户审查项3", "客户审查项4", "客户审查项5"],
   "nextSteps": ["下一步1", "下一步2", "下一步3", "下一步4", "下一步5"]
 }
 `;

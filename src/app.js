@@ -63,12 +63,10 @@ function updatePreview() {
 
   nodes.score.textContent = `${calculateScore(pain)}%`;
   nodes.position.textContent = `面向${country}市场的${industry}增长项目`;
-  nodes.angle.textContent = industryAngles[industry];
-  nodes.copy.textContent = `为${country}用户生成适合 ${platform} 的本地化广告文案、短视频脚本和素材方向。`;
-  nodes.compliance.textContent = pain.includes('广告拒审')
-    ? '优先检查夸大承诺、敏感词、落地页一致性和平台政策风险。'
-    : '交付前进行广告政策、落地页信任要素和风险表达检查。';
-  nodes.seo.textContent = `围绕${industry}的产品词、痛点词、对比词和FAQ页面做 SEO/GEO 内容规划。`;
+  nodes.angle.textContent = `${industryAngles[industry]}，并补齐 SEO 页面结构和关键词地图。`;
+  nodes.copy.textContent = `为${country}市场生成品牌实体、FAQ、对比页、Schema 和 AI 搜索引用内容。`;
+  nodes.compliance.textContent = '交付优化后的页面文案、结构化数据、llms.txt 草案和客户审查清单。';
+  nodes.seo.textContent = '$599 / 单站 SEO+GEO 全域优化包，USDT 优先。';
   nodes.summaryWebsite.textContent = website || '等待客户提交 URL';
   nodes.summaryMarket.textContent = `${country} / ${platform} / ${industry}`;
   nodes.summaryPain.textContent = pain.length ? pain.join('、') : '待选择';
@@ -124,8 +122,8 @@ nodes.leadForm.addEventListener('submit', async (event) => {
   nodes.successBox.classList.remove('hidden');
   nodes.successText.textContent = '项目已记录，AI 正在生成完整增长报告。';
   nodes.reportSection.classList.remove('hidden');
-  nodes.reportStatus.textContent = '正在抓取网站、分析需求并生成投放素材、SEO/GEO 和合规建议...';
-  nodes.reportShell.innerHTML = '<div class="loadingBox">AI 正在生成报告，通常需要 20-60 秒。</div>';
+  nodes.reportStatus.textContent = '正在抓取网站、评分、定位 SEO/GEO 问题并生成优化后交付物...';
+  nodes.reportShell.innerHTML = '<div class="loadingBox">AI 正在生成 SEO/GEO 优化包，通常需要 20-60 秒。</div>';
   nodes.reportSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
   updatePreview();
 
@@ -147,7 +145,7 @@ nodes.leadForm.addEventListener('submit', async (event) => {
 
     nodes.statusText.textContent = '已生成';
     nodes.successText.textContent = 'AI 报告已生成，可继续复制给客户或导出整理。';
-    nodes.reportStatus.textContent = '已完成。以下内容可直接作为客户轻诊断报告初稿。';
+    nodes.reportStatus.textContent = '已完成。以下内容包含评分、问题、优化后交付物和客户审查清单。';
     renderReport(data.report);
   } catch (error) {
     nodes.statusText.textContent = '待配置';
@@ -175,6 +173,17 @@ function renderReport(report) {
       </div>
       <span class="riskBadge">${escapeHtml(report.summary?.riskLevel || '待评估')}风险</span>
     </div>
+
+    ${renderScores(report.seoGeoAudit?.scores)}
+
+    ${section('全域问题诊断', [
+      cards('关键问题', report.seoGeoAudit?.issues, (item) => `
+        ${strong(item.area)}
+        ${para(item.problem)}
+        ${small(`影响：${item.impact || '待评估'} / 优先级：${item.priority || '中'}`)}
+      `),
+      list('优先修复顺序', report.seoGeoAudit?.priorityFixes),
+    ])}
 
     ${section('产品分析', [
       kv('产品类型', report.productAnalysis?.productType),
@@ -240,9 +249,60 @@ function renderReport(report) {
       list('引用源', report.geo?.citationSources),
     ])}
 
+    ${section('优化后交付物', [
+      kv('优化后 Title', report.optimizedDeliverables?.homepageTitle),
+      kv('优化后 Meta Description', report.optimizedDeliverables?.homepageMetaDescription),
+      kv('优化后 H1', report.optimizedDeliverables?.homepageH1),
+      list('建议 H2 结构', report.optimizedDeliverables?.h2Structure),
+      cards('优化后 FAQ', report.optimizedDeliverables?.faqAnswers, (item) => `
+        ${strong(item.question)}
+        ${para(item.answer)}
+      `),
+      cards('Schema 草案', report.optimizedDeliverables?.schemaDrafts, (item) => `
+        ${strong(item.type)}
+        ${para(item.description)}
+        ${small(item.jsonLd)}
+      `),
+      kv('llms.txt 草案', report.optimizedDeliverables?.llmsTxt),
+      cards('内容日历', report.optimizedDeliverables?.contentCalendar, (item) => `
+        ${strong(item.title)}
+        ${para(item.intent)}
+        ${small(`${item.keyword || ''} ${item.format || ''}`)}
+      `),
+      list('客户审查清单', report.reviewChecklist),
+    ])}
+
     ${section('下一步执行', [
       list('优先动作', report.nextSteps),
     ])}
+  `;
+}
+
+function renderScores(scores) {
+  if (!scores) return '';
+  const items = [
+    ['总分', scores.overall],
+    ['SEO', scores.seo],
+    ['GEO', scores.geo],
+    ['技术', scores.technical],
+    ['内容', scores.content],
+    ['可信度', scores.authority],
+  ];
+
+  return `
+    <article class="reportCard">
+      <h3>全域评分</h3>
+      <div class="scoreGrid">
+        ${items
+          .map(([label, value]) => `
+            <div class="scoreTile">
+              <strong>${escapeHtml(value ?? '-')}</strong>
+              <span>${escapeHtml(label)}</span>
+            </div>
+          `)
+          .join('')}
+      </div>
+    </article>
   `;
 }
 
