@@ -15,6 +15,9 @@ const fields = {
   industry: document.querySelector('#industry'),
   contact: document.querySelector('#contact'),
   notes: document.querySelector('#notes'),
+  apiKey: document.querySelector('#apiKey'),
+  model: document.querySelector('#model'),
+  baseUrl: document.querySelector('#baseUrl'),
 };
 
 const nodes = {
@@ -94,6 +97,11 @@ nodes.leadForm.addEventListener('submit', async (event) => {
     painPoints: selectedPain(),
     contact: fields.contact.value.trim(),
     notes: fields.notes.value.trim(),
+    runtimeConfig: {
+      apiKey: fields.apiKey?.value.trim() || '',
+      model: fields.model?.value.trim() || '',
+      baseUrl: fields.baseUrl?.value.trim() || '',
+    },
     createdAt: new Date().toISOString(),
   };
 

@@ -33,7 +33,9 @@ export default {
 
 async function handleGenerate(request, env) {
   try {
-    const apiKey = env.OPENAI_API_KEY;
+    const payload = await request.json();
+    const runtimeConfig = normalizeRuntimeConfig(payload.runtimeConfig || {});
+    const apiKey = runtimeConfig.apiKey || env.OPENAI_API_KEY;
     if (!apiKey) {
       return jsonResponse(
         {
@@ -44,10 +46,9 @@ async function handleGenerate(request, env) {
       );
     }
 
-    const payload = await request.json();
     const brief = normalizeBrief(payload);
     const websiteText = await fetchWebsiteText(brief.website);
-    const report = await generateReport({ brief, websiteText, apiKey, env });
+    const report = await generateReport({ brief, websiteText, apiKey, env, runtimeConfig });
 
     return jsonResponse({ ok: true, report });
   } catch (error) {
@@ -117,9 +118,17 @@ function htmlToText(html) {
     .trim();
 }
 
-async function generateReport({ brief, websiteText, apiKey, env }) {
-  const model = env.OPENAI_MODEL || 'gpt-4.1-mini';
-  const baseUrl = (env.OPENAI_BASE_URL || DEFAULT_OPENAI_BASE_URL).replace(/\/$/, '');
+function normalizeRuntimeConfig(config) {
+  return {
+    apiKey: String(config.apiKey || '').trim(),
+    model: String(config.model || '').trim(),
+    baseUrl: String(config.baseUrl || '').trim(),
+  };
+}
+
+async function generateReport({ brief, websiteText, apiKey, env, runtimeConfig }) {
+  const model = runtimeConfig.model || env.OPENAI_MODEL || 'gpt-4.1-mini';
+  const baseUrl = (runtimeConfig.baseUrl || env.OPENAI_BASE_URL || DEFAULT_OPENAI_BASE_URL).replace(/\/$/, '');
   const response = await fetch(`${baseUrl}/responses`, {
     method: 'POST',
     headers: {

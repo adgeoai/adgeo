@@ -444,6 +444,30 @@ textarea:focus {
   min-height: 52px;
 }
 
+.apiSettings {
+  border: 1px solid rgba(24, 34, 31, 0.12);
+  border-radius: 8px;
+  background: #f4f7f1;
+  padding: 14px;
+}
+
+.apiSettings summary {
+  cursor: pointer;
+  color: #18221f;
+  font-weight: 900;
+}
+
+.apiSettings p {
+  margin: 10px 0 14px;
+  color: #52605c;
+  font-size: 13px;
+}
+
+.apiSettings[open] {
+  display: grid;
+  gap: 12px;
+}
+
 .resultPanel {
   position: sticky;
   top: 18px;

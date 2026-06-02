@@ -199,6 +199,25 @@
               <textarea id="notes" placeholder="例如：之前 Meta 拒审、想先测日本 TikTok、需要英文SEO内容..."></textarea>
             </label>
 
+            <details class="apiSettings">
+              <summary>临时 AI 配置</summary>
+              <p>用于测试生成流程。正式上线建议改用 Cloudflare 变量和机密。</p>
+              <label>
+                API Key
+                <input id="apiKey" type="password" placeholder="sk-..." autocomplete="off" />
+              </label>
+              <div class="twoCol">
+                <label>
+                  模型
+                  <input id="model" placeholder="gpt-4.1-mini" />
+                </label>
+                <label>
+                  Base URL
+                  <input id="baseUrl" placeholder="https://api.openai.com/v1" />
+                </label>
+              </div>
+            </details>
+
             <button class="submitBtn" type="submit">生成项目预览 ✨</button>
           </form>
 
