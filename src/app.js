@@ -21,6 +21,19 @@ const fields = {
   baseUrl: document.querySelector('#baseUrl'),
 };
 
+const planOptions = {
+  'SEO/GEO 全域优化': [
+    '$599 / 季度套餐 / 3个月 / 每月1次审核优化 / USDT',
+    '$1100 / 半年套餐 / 6个月 / 每月1次审核优化 / USDT',
+    '$2000 / 全年套餐 / 12个月 / 每月1次审核优化 / USDT',
+  ],
+  'AI 广告投放素材': [
+    '广告投放素材包 / 另行报价',
+    '广告文案+短视频脚本包 / 另行报价',
+    '广告素材+A/B测试矩阵 / 另行报价',
+  ],
+};
+
 const nodes = {
   score: document.querySelector('#projectScore'),
   position: document.querySelector('#previewPosition'),
@@ -65,18 +78,44 @@ function updatePreview() {
 
   nodes.score.textContent = `${calculateScore(pain)}%`;
   nodes.position.textContent = `${serviceType} / ${country} / ${industry}`;
-  nodes.angle.textContent = `${industryAngles[industry]}，并补齐 SEO 页面结构和关键词地图。`;
-  nodes.copy.textContent = `为${country}市场生成品牌实体、FAQ、对比页、Schema 和 AI 搜索引用内容。`;
-  nodes.compliance.textContent = '交付优化后的页面文案、结构化数据、llms.txt 草案和客户审查清单。';
-  nodes.seo.textContent = '$599 / 单站 SEO+GEO 全域优化包，USDT 优先。';
+  if (serviceType === 'SEO/GEO 全域优化') {
+    nodes.angle.textContent = `${industryAngles[industry]}，并补齐 SEO 页面结构和关键词地图。`;
+    nodes.copy.textContent = `为${country}市场生成品牌实体、FAQ、对比页、Schema 和 AI 搜索引用内容。`;
+    nodes.compliance.textContent = '交付优化后的页面文案、结构化数据、llms.txt 草案和客户审查清单。';
+    nodes.seo.textContent = '$599/季度、$1100/半年、$2000/全年，均含每月一次审核优化。';
+  } else {
+    nodes.angle.textContent = `${industryAngles[industry]}，生成适合 ${platform} 的投放创意角度。`;
+    nodes.copy.textContent = `为${country}市场生成广告标题、主文案、短视频脚本、素材方向和 A/B 测试矩阵。`;
+    nodes.compliance.textContent = '交付广告合规检查、风险表达替换和落地页一致性建议。';
+    nodes.seo.textContent = '广告投放素材独立报价，不包含 SEO/GEO 周期优化。';
+  }
   nodes.summaryWebsite.textContent = website || '等待客户提交 URL';
   nodes.summaryMarket.textContent = `${serviceType} / ${country} / ${platform} / ${industry}`;
   nodes.summaryPain.textContent = pain.length ? pain.join('、') : '待选择';
 }
 
+function syncPlanOptions() {
+  const currentOptions = planOptions[fields.serviceType.value] || planOptions['SEO/GEO 全域优化'];
+  const budget = document.querySelector('#budget');
+  budget.innerHTML = currentOptions.map((option) => `<option>${option}</option>`).join('');
+}
+
 Object.values(fields).forEach((field) => {
   field.addEventListener('input', updatePreview);
   field.addEventListener('change', updatePreview);
+});
+
+fields.serviceType.addEventListener('change', () => {
+  syncPlanOptions();
+  updatePreview();
+});
+
+document.querySelectorAll('[data-service-jump]').forEach((link) => {
+  link.addEventListener('click', () => {
+    fields.serviceType.value = link.dataset.serviceJump === 'ads' ? 'AI 广告投放素材' : 'SEO/GEO 全域优化';
+    syncPlanOptions();
+    updatePreview();
+  });
 });
 
 nodes.painGrid.addEventListener('click', (event) => {
@@ -164,6 +203,7 @@ nodes.leadForm.addEventListener('submit', async (event) => {
   }
 });
 
+syncPlanOptions();
 updatePreview();
 
 function renderReport(report) {

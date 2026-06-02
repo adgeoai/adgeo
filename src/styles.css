@@ -307,6 +307,51 @@ h1 {
   padding-bottom: 22px;
 }
 
+.serviceSplit {
+  padding-top: 34px;
+  padding-bottom: 34px;
+}
+
+.serviceCards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.serviceCard {
+  min-height: 250px;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 24px;
+  border: 1px solid rgba(24, 34, 31, 0.1);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 16px 38px rgba(34, 45, 40, 0.08);
+}
+
+.serviceCard small {
+  color: #b4452a;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.serviceCard h3 {
+  margin: 0;
+  font-size: clamp(24px, 3vw, 34px);
+}
+
+.serviceCard p {
+  margin: 0;
+  color: #52605c;
+}
+
+.serviceCard strong {
+  margin-top: 10px;
+  color: #196c5d;
+  font-size: 20px;
+}
+
 .metric {
   min-height: 116px;
   padding: 22px;
@@ -542,6 +587,7 @@ textarea:focus {
   .heroGrid,
   .formGrid,
   .compactStats,
+  .serviceCards,
   .steps {
     grid-template-columns: 1fr;
   }
