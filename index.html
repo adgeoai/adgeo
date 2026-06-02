@@ -169,7 +169,7 @@
                   <option>越南</option>
                 </select>
               </label>
-              <label>
+              <label id="platformField">
                 投放平台
                 <select id="platform">
                   <option>TikTok</option>
@@ -178,6 +178,15 @@
                   <option>YouTube</option>
                   <option>X</option>
                   <option>Reddit</option>
+                </select>
+              </label>
+              <label id="seoWorkField" class="hidden">
+                优化工作范围
+                <select id="seoWorkScope">
+                  <option selected>全域评分 + 问题诊断 + 优化后交付</option>
+                  <option>技术SEO + 页面结构优化</option>
+                  <option>GEO实体 + FAQ + Schema + llms.txt</option>
+                  <option>内容日历 + 月度收录审核</option>
                 </select>
               </label>
             </div>
@@ -269,8 +278,8 @@
               <p id="summaryPain">素材不够、不懂本地化</p>
             </div>
             <div class="deliverables">
-              <div class="delivery"><span>📊</span><span>SEO/GEO：评分、问题和优化交付</span></div>
-              <div class="delivery"><span>📣</span><span>广告投放：文案、脚本和素材方向</span></div>
+              <div class="delivery"><span>📊</span><span id="deliveryPrimary">SEO/GEO：评分、问题和优化交付</span></div>
+              <div class="delivery"><span>📣</span><span id="deliverySecondary">优化工作：技术SEO、内容、Schema、llms.txt、月度审核</span></div>
               <div class="delivery"><span>🧩</span><span>两个板块独立交付、独立审查</span></div>
               <div class="delivery"><span>💳</span><span>SEO/GEO $599/$1100/$2000，USDT 优先</span></div>
             </div>

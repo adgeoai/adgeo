@@ -68,6 +68,7 @@ function normalizeBrief(payload) {
     serviceType: String(payload.serviceType || 'SEO/GEO 全域优化'),
     country: String(payload.country || '美国'),
     platform: String(payload.platform || 'TikTok'),
+    seoWorkScope: String(payload.seoWorkScope || ''),
     industry: String(payload.industry || '独立站/DTC'),
     budget: String(payload.budget || '待确认'),
     painPoints: Array.isArray(payload.painPoints) ? payload.painPoints.map(String) : [],
@@ -189,6 +190,8 @@ SEO/GEO 套餐：
 两个板块必须分开：
 - 如果 serviceType 是“SEO/GEO 全域优化”，只输出 SEO/GEO 评分、问题、优化后交付物和月度审核计划；不要输出广告投放素材作为核心交付。
 - 如果 serviceType 是“AI 广告投放素材”，只输出广告投放素材、创意、视频脚本、A/B 测试和广告合规；不要输出 SEO/GEO 周期套餐作为核心交付。
+- SEO/GEO 板块没有“投放平台”概念。SEO/GEO 的工作范围是：全域评分、技术 SEO、页面结构、内容优化、GEO 品牌实体、FAQ、Schema、llms.txt、内容日历、AI 平台收录审核。
+- 广告投放板块才使用 platform 字段，例如 Meta、TikTok、Google、YouTube、X、Reddit。
 
 语言要求：
 - 如果 outputLanguage 是 English，所有 JSON 字段值必须使用英文。

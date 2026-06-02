@@ -165,6 +165,7 @@ const fields = {
   serviceType: document.querySelector('#serviceType'),
   country: document.querySelector('#country'),
   platform: document.querySelector('#platform'),
+  seoWorkScope: document.querySelector('#seoWorkScope'),
   industry: document.querySelector('#industry'),
   contact: document.querySelector('#contact'),
   notes: document.querySelector('#notes'),
@@ -259,13 +260,19 @@ function applyEnglishStaticCopy() {
     if (labelTexts[index]) label.childNodes[0].textContent = labelTexts[index];
   });
   const twoColLabels = document.querySelectorAll('.twoCol label');
-  ['Target Country', 'Ad Platform', 'Industry', 'Plan / Service'].forEach((text, index) => {
+  ['Target Country', 'Ad Platform', 'Optimization Scope', 'Industry', 'Plan / Service'].forEach((text, index) => {
     if (twoColLabels[index]) twoColLabels[index].childNodes[0].textContent = text;
   });
 
   translateOptions('#serviceType', ['SEO/GEO Omnichannel Optimization', 'AI Ad Creative Package']);
   translateOptions('#country', ['United States', 'Japan', 'Germany', 'Brazil', 'United Kingdom', 'Saudi Arabia', 'UAE', 'Indonesia', 'Thailand', 'Vietnam']);
   translateOptions('#industry', ['DTC / Independent Store', 'Overseas Game', 'App', 'SaaS / Tool', 'B2B Export', 'Cross-Border Ecommerce', 'Ad Agency']);
+  translateOptions('#seoWorkScope', [
+    'Full Score + Issue Diagnosis + Optimized Deliverables',
+    'Technical SEO + Page Structure Optimization',
+    'GEO Entities + FAQ + Schema + llms.txt',
+    'Content Calendar + Monthly Indexing Review',
+  ]);
 
   const chips = document.querySelectorAll('.chip');
   ['Not enough creatives', 'Poor conversion', 'Weak localization', 'Ad rejection', 'Unstable ad account', 'No SEO traffic', 'No AI search visibility'].forEach((text, index) => {
@@ -365,6 +372,10 @@ const nodes = {
   reportShell: document.querySelector('#reportShell'),
   leadForm: document.querySelector('#leadForm'),
   painGrid: document.querySelector('#painGrid'),
+  platformField: document.querySelector('#platformField'),
+  seoWorkField: document.querySelector('#seoWorkField'),
+  deliveryPrimary: document.querySelector('#deliveryPrimary'),
+  deliverySecondary: document.querySelector('#deliverySecondary'),
 };
 
 function selectedPain() {
@@ -392,18 +403,37 @@ function updatePreview() {
   nodes.score.textContent = `${calculateScore(pain)}%`;
   nodes.position.textContent = `${serviceType} / ${country} / ${industry}`;
   if (serviceType === 'SEO/GEO 全域优化') {
+    nodes.platformField.classList.add('hidden');
+    nodes.seoWorkField.classList.remove('hidden');
     nodes.angle.textContent = `${industryAngles[industry]}${copy.seoAngleSuffix}`;
     nodes.copy.textContent = copy.seoCopy(country);
     nodes.compliance.textContent = copy.seoCompliance;
     nodes.seo.textContent = copy.seoPreview;
+    nodes.deliveryPrimary.textContent = isEnglish
+      ? 'SEO/GEO: scores, issues, and optimized deliverables'
+      : 'SEO/GEO：评分、问题和优化交付';
+    nodes.deliverySecondary.textContent = isEnglish
+      ? 'Scope: technical SEO, content, Schema, llms.txt, and monthly review'
+      : '优化工作：技术SEO、内容、Schema、llms.txt、月度审核';
   } else {
+    nodes.platformField.classList.remove('hidden');
+    nodes.seoWorkField.classList.add('hidden');
     nodes.angle.textContent = `${industryAngles[industry]}${copy.adsAngleSuffix(platform)}`;
     nodes.copy.textContent = copy.adsCopy(country);
     nodes.compliance.textContent = copy.adsCompliance;
     nodes.seo.textContent = copy.adsPreview;
+    nodes.deliveryPrimary.textContent = isEnglish
+      ? 'Ads: copy, scripts, and creative directions'
+      : '广告投放：文案、脚本和素材方向';
+    nodes.deliverySecondary.textContent = isEnglish
+      ? 'Platform: Meta, TikTok, Google, YouTube, X, or Reddit'
+      : '投放平台：Meta、TikTok、Google、YouTube、X、Reddit';
   }
   nodes.summaryWebsite.textContent = website || copy.waitingUrl;
-  nodes.summaryMarket.textContent = `${serviceType} / ${country} / ${platform} / ${industry}`;
+  nodes.summaryMarket.textContent =
+    serviceType === 'SEO/GEO 全域优化'
+      ? `${serviceType} / ${country} / ${fields.seoWorkScope.value} / ${industry}`
+      : `${serviceType} / ${country} / ${platform} / ${industry}`;
   nodes.summaryPain.textContent = pain.length ? pain.join(isEnglish ? ', ' : '、') : copy.pending;
 }
 
@@ -446,6 +476,7 @@ nodes.leadForm.addEventListener('submit', async (event) => {
     serviceType: fields.serviceType.value,
     country: fields.country.value,
     platform: fields.platform.value,
+    seoWorkScope: fields.seoWorkScope?.value || '',
     industry: fields.industry.value,
     budget: document.querySelector('#budget').value,
     painPoints: selectedPain(),
