@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AdGEO AI 出海增长助手，输入产品网站，生成海外投放素材、本地化广告策略、合规检查和 SEO/GEO 增长建议。"
+    />
+    <title>AdGEO AI 出海增长助手</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <div class="nav">
+          <div class="brand">
+            <span class="brandMark">✦</span>
+            <span>AdGEO AI</span>
+          </div>
+          <div class="navPills">
+            <span>投放素材</span>
+            <span>SEO</span>
+            <span>GEO</span>
+            <span>合规诊断</span>
+          </div>
+        </div>
+
+        <div class="heroGrid">
+          <div class="heroCopy">
+            <p class="eyebrow">AI 出海增长助手</p>
+            <h1>输入产品网站，生成海外投放增长包</h1>
+            <p class="lead">
+              为独立站、海外游戏、App 和出海企业生成本地化广告文案、短视频脚本、素材方向、广告合规检查，以及 SEO/GEO 优化建议。
+            </p>
+            <div class="heroActions">
+              <a href="#brief" class="primaryBtn">创建诊断项目 <span>→</span></a>
+              <a href="#workflow" class="secondaryBtn">查看交付流程</a>
+            </div>
+            <div class="proofRow">
+              <span>✓ 24小时轻诊断</span>
+              <span>✓ 多国家本地化</span>
+              <span>✓ 合规边界清晰</span>
+            </div>
+          </div>
+
+          <div class="heroPanel">
+            <div class="panelHeader">
+              <span>▣ 诊断预览</span>
+              <strong id="projectScore">70%</strong>
+            </div>
+            <div class="scanCard">
+              <div>
+                <small>目标项目</small>
+                <strong id="previewPosition">面向美国市场的独立站/DTC增长项目</strong>
+              </div>
+              <div class="scanLine"></div>
+            </div>
+            <div class="previewList">
+              <div class="previewItem">
+                <span>◎</span>
+                <div>
+                  <small>投放角度</small>
+                  <p id="previewAngle">突出产品差异、用户评价、优惠转化和移动端购买体验</p>
+                </div>
+              </div>
+              <div class="previewItem">
+                <span>◈</span>
+                <div>
+                  <small>广告素材</small>
+                  <p id="previewCopy">为美国用户生成适合 TikTok 的本地化广告文案、短视频脚本和素材方向。</p>
+                </div>
+              </div>
+              <div class="previewItem">
+                <span>◇</span>
+                <div>
+                  <small>合规检查</small>
+                  <p id="previewCompliance">交付前进行广告政策、落地页信任要素和风险表达检查。</p>
+                </div>
+              </div>
+              <div class="previewItem">
+                <span>⌕</span>
+                <div>
+                  <small>SEO/GEO</small>
+                  <p id="previewSeo">围绕独立站/DTC的产品词、痛点词、对比词和FAQ页面做 SEO/GEO 内容规划。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section compactStats">
+        <div class="metric">
+          <strong>URL</strong>
+          <span>自动分析产品、卖点、页面转化问题</span>
+        </div>
+        <div class="metric">
+          <strong>10+</strong>
+          <span>国家用户习惯和本地化表达方向</span>
+        </div>
+        <div class="metric">
+          <strong>4类</strong>
+          <span>广告、视频、SEO、GEO统一交付</span>
+        </div>
+      </section>
+
+      <section class="section" id="brief">
+        <div class="sectionTitle">
+          <p class="eyebrow">创建项目</p>
+          <h2>提交网站和目标市场</h2>
+          <p>这是第一版收单入口，客户填写后即可进入人工+AI诊断交付流程。</p>
+        </div>
+
+        <div class="formGrid">
+          <form class="briefForm" id="leadForm">
+            <label>
+              产品网站 URL
+              <div class="inputIcon">
+                <span>🔗</span>
+                <input id="website" placeholder="https://example.com" required />
+              </div>
+            </label>
+
+            <div class="twoCol">
+              <label>
+                目标国家
+                <select id="country">
+                  <option>美国</option>
+                  <option>日本</option>
+                  <option>德国</option>
+                  <option>巴西</option>
+                  <option>英国</option>
+                  <option>沙特</option>
+                  <option>阿联酋</option>
+                  <option>印尼</option>
+                  <option>泰国</option>
+                  <option>越南</option>
+                </select>
+              </label>
+              <label>
+                投放平台
+                <select id="platform">
+                  <option>TikTok</option>
+                  <option>Meta</option>
+                  <option>Google</option>
+                  <option>YouTube</option>
+                  <option>X</option>
+                  <option>Reddit</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="twoCol">
+              <label>
+                产品行业
+                <select id="industry">
+                  <option>独立站/DTC</option>
+                  <option>海外游戏</option>
+                  <option>App</option>
+                  <option>SaaS/工具</option>
+                  <option>外贸B2B</option>
+                  <option>跨境电商</option>
+                  <option>广告代理商</option>
+                </select>
+              </label>
+              <label>
+                月投放预算
+                <select id="budget">
+                  <option>1万以下/月</option>
+                  <option selected>1万-5万/月</option>
+                  <option>5万-20万/月</option>
+                  <option>20万以上/月</option>
+                  <option>暂未投放</option>
+                </select>
+              </label>
+            </div>
+
+            <label>
+              当前痛点
+              <div class="chipGrid" id="painGrid">
+                <button type="button" class="chip active" data-pain="素材不够">素材不够</button>
+                <button type="button" class="chip" data-pain="转化差">转化差</button>
+                <button type="button" class="chip active" data-pain="不懂本地化">不懂本地化</button>
+                <button type="button" class="chip" data-pain="广告拒审">广告拒审</button>
+                <button type="button" class="chip" data-pain="账户不稳定">账户不稳定</button>
+                <button type="button" class="chip" data-pain="SEO没流量">SEO没流量</button>
+                <button type="button" class="chip" data-pain="AI搜索没曝光">AI搜索没曝光</button>
+              </div>
+            </label>
+
+            <label>
+              联系方式
+              <input id="contact" placeholder="微信 / 邮箱 / 手机" required />
+            </label>
+
+            <label>
+              补充说明
+              <textarea id="notes" placeholder="例如：之前 Meta 拒审、想先测日本 TikTok、需要英文SEO内容..."></textarea>
+            </label>
+
+            <button class="submitBtn" type="submit">生成项目预览 ✨</button>
+          </form>
+
+          <aside class="resultPanel">
+            <div class="resultHeader">
+              <span>▤ 交付摘要</span>
+              <strong id="statusText">预览中</strong>
+            </div>
+            <div class="summaryBox">
+              <small>网站</small>
+              <p id="summaryWebsite">等待客户提交 URL</p>
+            </div>
+            <div class="summaryBox">
+              <small>市场与平台</small>
+              <p id="summaryMarket">美国 / TikTok / 独立站/DTC</p>
+            </div>
+            <div class="summaryBox">
+              <small>痛点</small>
+              <p id="summaryPain">素材不够、不懂本地化</p>
+            </div>
+            <div class="deliverables">
+              <div class="delivery"><span>🌍</span><span>目标国家用户习惯分析</span></div>
+              <div class="delivery"><span>📣</span><span>广告文案与短视频脚本</span></div>
+              <div class="delivery"><span>🛡</span><span>广告合规风险提示</span></div>
+              <div class="delivery"><span>📈</span><span>SEO/GEO 增长建议</span></div>
+            </div>
+            <div class="successBox hidden" id="successBox">
+              <span>✓</span>
+              <span>项目已记录。下一步可接入表单后端、飞书/Notion、邮件通知或 CRM。</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section workflow" id="workflow">
+        <div class="sectionTitle">
+          <p class="eyebrow">交付流程</p>
+          <h2>从网站到增长包</h2>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <span>01</span>
+            <h3>网站解析</h3>
+            <p>提取产品定位、卖点、页面转化问题、信任背书和潜在风险。</p>
+          </div>
+          <div class="step">
+            <span>02</span>
+            <h3>本地化策略</h3>
+            <p>按国家、平台、行业生成用户习惯、表达方式、视觉方向和投放角度。</p>
+          </div>
+          <div class="step">
+            <span>03</span>
+            <h3>素材生成</h3>
+            <p>输出广告文案、UGC脚本、图片素材提示词、A/B测试矩阵。</p>
+          </div>
+          <div class="step">
+            <span>04</span>
+            <h3>SEO/GEO</h3>
+            <p>生成关键词、FAQ、结构化内容和AI搜索可见度建议。</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="./src/config.js"></script>
+    <script src="./src/app.js"></script>
+  </body>
+</html>

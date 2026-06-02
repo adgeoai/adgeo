@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>AdGEO AI 线索后台</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <main class="adminPage">
+      <section class="adminShell">
+        <div class="adminTop">
+          <div>
+            <p class="eyebrow">Lead Console</p>
+            <h1>客户提交记录</h1>
+            <p>当前版本读取本浏览器保存的测试线索。正式上线后可切换到飞书、Notion、CRM 或自建后端。</p>
+          </div>
+          <div class="adminActions">
+            <a class="secondaryBtn" href="./index.html">返回首页</a>
+            <button class="primaryBtn" id="exportCsv">导出 CSV</button>
+          </div>
+        </div>
+
+        <div class="adminStats">
+          <div class="metric">
+            <strong id="leadCount">0</strong>
+            <span>线索数量</span>
+          </div>
+          <div class="metric">
+            <strong id="latestCountry">-</strong>
+            <span>最新目标国家</span>
+          </div>
+          <div class="metric">
+            <strong id="latestPlatform">-</strong>
+            <span>最新平台</span>
+          </div>
+        </div>
+
+        <div class="leadTableWrap">
+          <table class="leadTable">
+            <thead>
+              <tr>
+                <th>时间</th>
+                <th>网站</th>
+                <th>国家</th>
+                <th>平台</th>
+                <th>行业</th>
+                <th>预算</th>
+                <th>痛点</th>
+                <th>联系方式</th>
+                <th>备注</th>
+              </tr>
+            </thead>
+            <tbody id="leadRows"></tbody>
+          </table>
+          <div class="emptyState" id="emptyState">
+            暂无记录。先到首页提交一个测试项目。
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="./src/admin.js"></script>
+  </body>
+</html>
