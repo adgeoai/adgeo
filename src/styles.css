@@ -540,6 +540,30 @@ h1 {
   margin-top: 10px;
 }
 
+.unlockCard {
+  border-color: rgba(25, 108, 93, 0.24);
+  background: #f8fbf8;
+}
+
+.unlockCard p {
+  color: #52605c;
+}
+
+.unlockPlans {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.unlockPlans span {
+  padding: 10px 13px;
+  border-radius: 999px;
+  color: #fff;
+  background: #196c5d;
+  font-weight: 900;
+}
+
 .metric {
   min-height: 116px;
   padding: 22px;

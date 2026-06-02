@@ -445,14 +445,10 @@ function translateOptions(selector, texts) {
 
 const planOptions = {
   'SEO/GEO 全域优化': [
+    isEnglish ? 'Scan issues first, no payment yet' : '先扫描问题，暂不付款',
     isEnglish ? '$599 / Quarterly Plan / 3 months / 1 monthly review / USDT' : '$599 / 季度套餐 / 3个月 / 每月1次审核优化 / USDT',
     isEnglish ? '$1100 / 6-Month Plan / 1 monthly review / USDT' : '$1100 / 半年套餐 / 6个月 / 每月1次审核优化 / USDT',
     isEnglish ? '$2000 / Annual Plan / 12 months / 1 monthly review / USDT' : '$2000 / 全年套餐 / 12个月 / 每月1次审核优化 / USDT',
-  ],
-  'AI 广告投放素材': [
-    isEnglish ? 'Ad Creative Package / Custom Quote' : '广告投放素材包 / 另行报价',
-    isEnglish ? 'Ad Copy + Short Video Scripts / Custom Quote' : '广告文案+短视频脚本包 / 另行报价',
-    isEnglish ? 'Creative Directions + A/B Test Matrix / Custom Quote' : '广告素材+A/B测试矩阵 / 另行报价',
   ],
 };
 
@@ -504,38 +500,19 @@ function updatePreview() {
 
   nodes.score.textContent = `${calculateScore(pain)}%`;
   nodes.position.textContent = `${serviceType} / ${country} / ${industry}`;
-  if (serviceType === 'SEO/GEO 全域优化') {
-    nodes.platformField.classList.add('hidden');
-    nodes.seoWorkField.classList.remove('hidden');
-    nodes.angle.textContent = `${industryAngles[industry]}${copy.seoAngleSuffix}`;
-    nodes.copy.textContent = copy.seoCopy(country);
-    nodes.compliance.textContent = copy.seoCompliance;
-    nodes.seo.textContent = copy.seoPreview;
-    nodes.deliveryPrimary.textContent = isEnglish
-      ? 'SEO/GEO: scores, issues, and optimized deliverables'
-      : 'SEO/GEO：评分、问题和优化交付';
-    nodes.deliverySecondary.textContent = isEnglish
-      ? 'Scope: technical SEO, content, Schema, llms.txt, and monthly review'
-      : '优化工作：技术SEO、内容、Schema、llms.txt、月度审核';
-  } else {
-    nodes.platformField.classList.remove('hidden');
-    nodes.seoWorkField.classList.add('hidden');
-    nodes.angle.textContent = `${industryAngles[industry]}${copy.adsAngleSuffix(platform)}`;
-    nodes.copy.textContent = copy.adsCopy(country);
-    nodes.compliance.textContent = copy.adsCompliance;
-    nodes.seo.textContent = copy.adsPreview;
-    nodes.deliveryPrimary.textContent = isEnglish
-      ? 'Ads: copy, scripts, and creative directions'
-      : '广告投放：文案、脚本和素材方向';
-    nodes.deliverySecondary.textContent = isEnglish
-      ? 'Platform: Meta, TikTok, Google, YouTube, X, or Reddit'
-      : '投放平台：Meta、TikTok、Google、YouTube、X、Reddit';
-  }
+  nodes.seoWorkField?.classList.remove('hidden');
+  nodes.angle.textContent = `${industryAngles[industry]}${copy.seoAngleSuffix}`;
+  nodes.copy.textContent = copy.seoCopy(country);
+  nodes.compliance.textContent = copy.seoCompliance;
+  nodes.seo.textContent = copy.seoPreview;
+  nodes.deliveryPrimary.textContent = isEnglish
+    ? 'First identify SEO/GEO issues and priorities'
+    : '先找出 SEO/GEO 问题和优先级';
+  nodes.deliverySecondary.textContent = isEnglish
+    ? 'After payment, we deliver the complete optimization plan'
+    : '付款后由我们交付完整优化方案';
   nodes.summaryWebsite.textContent = website || copy.waitingUrl;
-  nodes.summaryMarket.textContent =
-    serviceType === 'SEO/GEO 全域优化'
-      ? `${serviceType} / ${country} / ${fields.seoWorkScope.value} / ${industry}`
-      : `${serviceType} / ${country} / ${platform} / ${industry}`;
+  nodes.summaryMarket.textContent = `${country} / ${fields.seoWorkScope.value} / ${industry}`;
   nodes.summaryPain.textContent = pain.length ? pain.join(isEnglish ? ', ' : '、') : copy.pending;
 }
 
@@ -550,7 +527,7 @@ Object.values(fields).forEach((field) => {
   field.addEventListener('change', updatePreview);
 });
 
-fields.serviceType.addEventListener('change', () => {
+fields.serviceType?.addEventListener('change', () => {
   syncPlanOptions();
   updatePreview();
 });
@@ -655,6 +632,7 @@ updatePreview();
 
 function renderReport(report) {
   const isSeoService = fields.serviceType.value === 'SEO/GEO 全域优化';
+  const isPaidPlan = !document.querySelector('#budget').value.includes('先扫描') && !document.querySelector('#budget').value.includes('no payment');
   const s = copy.sections;
 
   if (isSeoService) {
@@ -675,8 +653,11 @@ function renderReport(report) {
         kv(s.monthly, report.seoGeoAudit?.monthlyReview),
         cards(s.issues, report.seoGeoAudit?.issues, (item) => `
           ${strong(item.area)}
-          ${para(item.problem)}
-          ${small(`${s.impact}: ${item.impact || copy.pending} / ${s.priority}: ${item.priority || copy.pending}`)}
+          ${para(`${isEnglish ? 'Problem' : '问题'}：${item.problem || copy.pending}`)}
+          ${para(`${isEnglish ? 'Impact' : '影响'}：${item.impact || copy.pending}`)}
+          ${para(`${isEnglish ? 'How we fix it' : '我们如何解决'}：${item.solution || copy.pending}`)}
+          ${para(`${isEnglish ? 'Paid deliverable' : '付款后交付'}：${item.deliverable || copy.pending}`)}
+          ${small(`${isEnglish ? 'Client review' : '客户确认'}：${item.clientReview || copy.pending} / ${s.priority}: ${item.priority || copy.pending}`)}
         `),
         list(s.fixes, report.seoGeoAudit?.priorityFixes),
       ])}
@@ -704,28 +685,32 @@ function renderReport(report) {
         list('Citation Sources', report.geo?.citationSources),
       ])}
 
-      ${section(s.deliverables, [
-        kv('Optimized Title', report.optimizedDeliverables?.homepageTitle),
-        kv('Optimized Meta Description', report.optimizedDeliverables?.homepageMetaDescription),
-        kv('Optimized H1', report.optimizedDeliverables?.homepageH1),
-        list('Recommended H2 Structure', report.optimizedDeliverables?.h2Structure),
-        cards('Optimized FAQ', report.optimizedDeliverables?.faqAnswers, (item) => `
-          ${strong(item.question)}
-          ${para(item.answer)}
-        `),
-        cards('Schema Drafts', report.optimizedDeliverables?.schemaDrafts, (item) => `
-          ${strong(item.type)}
-          ${para(item.description)}
-          ${small(item.jsonLd)}
-        `),
-        kv('llms.txt Draft', report.optimizedDeliverables?.llmsTxt),
-        cards('Content Calendar', report.optimizedDeliverables?.contentCalendar, (item) => `
-          ${strong(item.title)}
-          ${para(item.intent)}
-          ${small(`${item.keyword || ''} ${item.format || ''}`)}
-        `),
-        list(s.review, report.reviewChecklist),
-      ])}
+      ${
+        isPaidPlan
+          ? section(s.deliverables, [
+              kv('Optimized Title', report.optimizedDeliverables?.homepageTitle),
+              kv('Optimized Meta Description', report.optimizedDeliverables?.homepageMetaDescription),
+              kv('Optimized H1', report.optimizedDeliverables?.homepageH1),
+              list('Recommended H2 Structure', report.optimizedDeliverables?.h2Structure),
+              cards('Optimized FAQ', report.optimizedDeliverables?.faqAnswers, (item) => `
+                ${strong(item.question)}
+                ${para(item.answer)}
+              `),
+              cards('Schema Drafts', report.optimizedDeliverables?.schemaDrafts, (item) => `
+                ${strong(item.type)}
+                ${para(item.description)}
+                ${small(item.jsonLd)}
+              `),
+              kv('llms.txt Draft', report.optimizedDeliverables?.llmsTxt),
+              cards('Content Calendar', report.optimizedDeliverables?.contentCalendar, (item) => `
+                ${strong(item.title)}
+                ${para(item.intent)}
+                ${small(`${item.keyword || ''} ${item.format || ''}`)}
+              `),
+              list(s.review, report.reviewChecklist),
+            ])
+          : renderPaymentUnlock()
+      }
 
       ${section(s.next, [
         list('Priority Actions', report.nextSteps),
@@ -788,6 +773,24 @@ function renderReport(report) {
     ${section(s.next, [
       list('Priority Actions', report.nextSteps),
     ])}
+  `;
+}
+
+function renderPaymentUnlock() {
+  return `
+    <article class="reportCard unlockCard">
+      <h3>${escapeHtml(isEnglish ? 'Unlock the Full Optimization Plan' : '付款解锁完整优化方案')}</h3>
+      <p>${escapeHtml(
+        isEnglish
+          ? 'The scan has identified the issues and how we will fix them. Choose a plan to receive the complete optimized Title, Meta, H1/H2, FAQ, Schema, llms.txt, content calendar, and monthly review plan.'
+          : '扫描已经找出问题、影响和我们会如何解决。选择套餐后，我们交付完整的 Title、Meta、H1/H2、FAQ、Schema、llms.txt、内容日历和月度审核计划。'
+      )}</p>
+      <div class="unlockPlans">
+        <span>$599 / ${escapeHtml(isEnglish ? 'Quarterly' : '季度')}</span>
+        <span>$1100 / ${escapeHtml(isEnglish ? '6 Months' : '半年')}</span>
+        <span>$2000 / ${escapeHtml(isEnglish ? 'Annual' : '全年')}</span>
+      </div>
+    </article>
   `;
 }
 

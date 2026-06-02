@@ -178,26 +178,26 @@ function buildPrompt(brief, websiteText) {
   return `
 你是一个“AI 全域 SEO/GEO 优化专家系统”，服务对象是独立站、海外游戏、App、SaaS、跨境电商和出海企业。
 
-产品有两个独立板块：
-1. SEO/GEO 全域优化：长期收录、AI搜索曝光、品牌实体、结构化内容、月度审核优化。
-2. AI 广告投放素材：短期投放素材、广告文案、短视频脚本、素材方向、广告合规检查。
+当前第一版产品只做 SEO/GEO 全域诊断与优化，不做广告投放，不做广告素材。
 
 SEO/GEO 套餐：
 - 599 美金：季度套餐，3个月，每月一次 AI 平台收录审核和优化，USDT 优先。
 - 1100 美金：半年套餐，6个月，每月一次 AI 平台收录审核和优化，USDT 优先。
 - 2000 美金：全年套餐，12个月，每月一次 AI 平台收录审核和优化，USDT 优先。
 
-两个板块必须分开：
-- 如果 serviceType 是“SEO/GEO 全域优化”，只输出 SEO/GEO 评分、问题、优化后交付物和月度审核计划；不要输出广告投放素材作为核心交付。
-- 如果 serviceType 是“AI 广告投放素材”，只输出广告投放素材、创意、视频脚本、A/B 测试和广告合规；不要输出 SEO/GEO 周期套餐作为核心交付。
-- SEO/GEO 板块没有“投放平台”概念。SEO/GEO 的工作范围是：全域评分、技术 SEO、页面结构、内容优化、GEO 品牌实体、FAQ、Schema、llms.txt、内容日历、AI 平台收录审核。
-- 广告投放板块才使用 platform 字段，例如 Meta、TikTok、Google、YouTube、X、Reddit。
+SEO/GEO 的工作范围是：全域评分、技术 SEO、页面结构、内容优化、GEO 品牌实体、FAQ、Schema、llms.txt、内容日历、AI 平台收录审核。
+
+报告口径：
+- 不要只给“建议”，必须写成“我们会如何帮客户解决”。
+- 每个关键问题都要包含：客户当前问题、业务影响、我们会做的修复动作、付款后交付物、客户需要确认的事项。
+- 扫描阶段先展示问题和解决路径；完整可复制优化稿属于付款后交付。
+- 不要输出广告投放策略、广告文案、短视频脚本或广告账户建议。
 
 语言要求：
 - 如果 outputLanguage 是 English，所有 JSON 字段值必须使用英文。
 - 如果 outputLanguage 是 Chinese，所有 JSON 字段值必须使用中文。
 
-你必须基于客户提交的网站和需求，直接产出可交付的优化报告，而不是解释你会怎么做。报告必须先评分和找问题，再给出优化后的交付物，客户可以逐项审查。
+你必须基于客户提交的网站和需求，产出 SEO/GEO 问题诊断和解决方案。重点不是“建议客户做”，而是“我们会如何给客户解决”。
 
 合规边界：
 - 可以提供广告政策风险检查、拒审原因分析、落地页合规建议、账户结构建议、申诉文案辅助。
@@ -232,11 +232,11 @@ ${websiteText}
       "authority": 0
     },
     "issues": [
-      {"area": "SEO/GEO/技术/内容/可信度", "problem": "具体问题", "impact": "影响", "priority": "高/中/低"},
-      {"area": "SEO/GEO/技术/内容/可信度", "problem": "具体问题", "impact": "影响", "priority": "高/中/低"},
-      {"area": "SEO/GEO/技术/内容/可信度", "problem": "具体问题", "impact": "影响", "priority": "高/中/低"},
-      {"area": "SEO/GEO/技术/内容/可信度", "problem": "具体问题", "impact": "影响", "priority": "高/中/低"},
-      {"area": "SEO/GEO/技术/内容/可信度", "problem": "具体问题", "impact": "影响", "priority": "高/中/低"}
+      {"area": "SEO/GEO/技术/内容/可信度", "problem": "客户当前具体问题", "impact": "业务影响", "solution": "我们会如何解决", "deliverable": "付款后交付物", "clientReview": "客户需要确认的事项", "priority": "高/中/低"},
+      {"area": "SEO/GEO/技术/内容/可信度", "problem": "客户当前具体问题", "impact": "业务影响", "solution": "我们会如何解决", "deliverable": "付款后交付物", "clientReview": "客户需要确认的事项", "priority": "高/中/低"},
+      {"area": "SEO/GEO/技术/内容/可信度", "problem": "客户当前具体问题", "impact": "业务影响", "solution": "我们会如何解决", "deliverable": "付款后交付物", "clientReview": "客户需要确认的事项", "priority": "高/中/低"},
+      {"area": "SEO/GEO/技术/内容/可信度", "problem": "客户当前具体问题", "impact": "业务影响", "solution": "我们会如何解决", "deliverable": "付款后交付物", "clientReview": "客户需要确认的事项", "priority": "高/中/低"},
+      {"area": "SEO/GEO/技术/内容/可信度", "problem": "客户当前具体问题", "impact": "业务影响", "solution": "我们会如何解决", "deliverable": "付款后交付物", "clientReview": "客户需要确认的事项", "priority": "高/中/低"}
     ],
     "priorityFixes": ["优先修复1", "优先修复2", "优先修复3", "优先修复4", "优先修复5"]
   },
@@ -246,50 +246,6 @@ ${websiteText}
     "targetUsers": ["用户画像1", "用户画像2", "用户画像3"],
     "purchaseMotivations": ["动机1", "动机2", "动机3"],
     "conversionProblems": ["问题1", "问题2", "问题3"]
-  },
-  "localization": {
-    "country": "目标国家",
-    "userHabits": ["习惯1", "习惯2", "习惯3"],
-    "preferredTone": ["表达风格1", "表达风格2"],
-    "visualDirection": ["视觉方向1", "视觉方向2", "视觉方向3"],
-    "avoid": ["避免事项1", "避免事项2", "避免事项3"]
-  },
-  "adStrategy": {
-    "platform": "投放平台",
-    "angles": [
-      {"name": "角度名称", "message": "核心信息", "bestFor": "适合人群"},
-      {"name": "角度名称", "message": "核心信息", "bestFor": "适合人群"},
-      {"name": "角度名称", "message": "核心信息", "bestFor": "适合人群"}
-    ],
-    "adCopies": [
-      {"title": "标题", "body": "主文案", "cta": "CTA", "angle": "角度"},
-      {"title": "标题", "body": "主文案", "cta": "CTA", "angle": "角度"},
-      {"title": "标题", "body": "主文案", "cta": "CTA", "angle": "角度"},
-      {"title": "标题", "body": "主文案", "cta": "CTA", "angle": "角度"},
-      {"title": "标题", "body": "主文案", "cta": "CTA", "angle": "角度"}
-    ],
-    "creativeDirections": [
-      {"name": "素材方向", "imagePrompt": "图片生成/设计提示词", "headline": "画面标题", "note": "执行说明"},
-      {"name": "素材方向", "imagePrompt": "图片生成/设计提示词", "headline": "画面标题", "note": "执行说明"},
-      {"name": "素材方向", "imagePrompt": "图片生成/设计提示词", "headline": "画面标题", "note": "执行说明"}
-    ]
-  },
-  "videoScripts": [
-    {"name": "脚本名称", "duration": "20-30秒", "hook": "前三秒钩子", "scenes": ["0-3秒画面", "4-8秒画面", "9-15秒画面", "16-25秒画面", "26-30秒画面"], "voiceover": "完整口播文案", "captions": ["字幕1", "字幕2", "字幕3"], "cta": "行动号召"},
-    {"name": "脚本名称", "duration": "20-30秒", "hook": "前三秒钩子", "scenes": ["0-3秒画面", "4-8秒画面", "9-15秒画面", "16-25秒画面", "26-30秒画面"], "voiceover": "完整口播文案", "captions": ["字幕1", "字幕2", "字幕3"], "cta": "行动号召"}
-  ],
-  "compliance": {
-    "riskLevel": "低/中/高",
-    "risks": ["风险1", "风险2", "风险3"],
-    "unsafeClaims": ["不建议表达1", "不建议表达2"],
-    "safeAlternatives": ["替代表达1", "替代表达2"],
-    "accountAdvice": ["账户结构建议1", "账户结构建议2", "账户结构建议3"]
-  },
-  "landingPage": {
-    "aboveFold": ["首屏建议1", "首屏建议2"],
-    "trustSignals": ["信任建议1", "信任建议2"],
-    "cta": ["CTA建议1", "CTA建议2"],
-    "mobile": ["移动端建议1", "移动端建议2"]
   },
   "seo": {
     "keywords": ["关键词1", "关键词2", "关键词3", "关键词4", "关键词5"],
