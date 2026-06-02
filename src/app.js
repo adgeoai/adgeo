@@ -10,6 +10,7 @@ const industryAngles = {
 
 const fields = {
   website: document.querySelector('#website'),
+  serviceType: document.querySelector('#serviceType'),
   country: document.querySelector('#country'),
   platform: document.querySelector('#platform'),
   industry: document.querySelector('#industry'),
@@ -58,17 +59,18 @@ function updatePreview() {
   const country = fields.country.value;
   const platform = fields.platform.value;
   const industry = fields.industry.value;
+  const serviceType = fields.serviceType.value;
   const pain = selectedPain();
   const website = fields.website.value.trim();
 
   nodes.score.textContent = `${calculateScore(pain)}%`;
-  nodes.position.textContent = `面向${country}市场的${industry}增长项目`;
+  nodes.position.textContent = `${serviceType} / ${country} / ${industry}`;
   nodes.angle.textContent = `${industryAngles[industry]}，并补齐 SEO 页面结构和关键词地图。`;
   nodes.copy.textContent = `为${country}市场生成品牌实体、FAQ、对比页、Schema 和 AI 搜索引用内容。`;
   nodes.compliance.textContent = '交付优化后的页面文案、结构化数据、llms.txt 草案和客户审查清单。';
   nodes.seo.textContent = '$599 / 单站 SEO+GEO 全域优化包，USDT 优先。';
   nodes.summaryWebsite.textContent = website || '等待客户提交 URL';
-  nodes.summaryMarket.textContent = `${country} / ${platform} / ${industry}`;
+  nodes.summaryMarket.textContent = `${serviceType} / ${country} / ${platform} / ${industry}`;
   nodes.summaryPain.textContent = pain.length ? pain.join('、') : '待选择';
 }
 
@@ -88,6 +90,7 @@ nodes.leadForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   const payload = {
     website: fields.website.value.trim(),
+    serviceType: fields.serviceType.value,
     country: fields.country.value,
     platform: fields.platform.value,
     industry: fields.industry.value,
@@ -177,6 +180,8 @@ function renderReport(report) {
     ${renderScores(report.seoGeoAudit?.scores)}
 
     ${section('全域问题诊断', [
+      kv('服务套餐', report.seoGeoAudit?.selectedPlan),
+      kv('月度审核优化', report.seoGeoAudit?.monthlyReview),
       cards('关键问题', report.seoGeoAudit?.issues, (item) => `
         ${strong(item.area)}
         ${para(item.problem)}

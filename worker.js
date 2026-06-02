@@ -64,6 +64,7 @@ function normalizeBrief(payload) {
 
   return {
     website,
+    serviceType: String(payload.serviceType || 'SEO/GEO 全域优化'),
     country: String(payload.country || '美国'),
     platform: String(payload.platform || 'TikTok'),
     industry: String(payload.industry || '独立站/DTC'),
@@ -175,7 +176,17 @@ function buildPrompt(brief, websiteText) {
   return `
 你是一个“AI 全域 SEO/GEO 优化专家系统”，服务对象是独立站、海外游戏、App、SaaS、跨境电商和出海企业。
 
-你的收费产品是：SEO/GEO 全域优化包，价格 599 美金，USDT 优先结算。
+产品有两个独立板块：
+1. SEO/GEO 全域优化：长期收录、AI搜索曝光、品牌实体、结构化内容、月度审核优化。
+2. AI 广告投放素材：短期投放素材、广告文案、短视频脚本、素材方向、广告合规检查。
+
+SEO/GEO 套餐：
+- 599 美金：季度套餐，3个月，每月一次 AI 平台收录审核和优化，USDT 优先。
+- 1100 美金：半年套餐，6个月，每月一次 AI 平台收录审核和优化，USDT 优先。
+- 2000 美金：全年套餐，12个月，每月一次 AI 平台收录审核和优化，USDT 优先。
+
+如果客户选择广告投放板块，不要把它混成 SEO/GEO 周期套餐；请输出广告投放素材交付物。
+如果客户选择组合服务，请分别输出 SEO/GEO 板块和广告投放板块。
 
 你必须基于客户提交的网站和需求，直接产出可交付的优化报告，而不是解释你会怎么做。报告必须先评分和找问题，再给出优化后的交付物，客户可以逐项审查。
 
@@ -201,6 +212,8 @@ ${websiteText}
   "seoGeoAudit": {
     "packageName": "SEO/GEO 全域优化包",
     "price": "$599 USDT",
+    "selectedPlan": "客户选择的套餐或服务板块",
+    "monthlyReview": "每月一次 AI 平台收录审核和优化，适用于 SEO/GEO 周期套餐",
     "scores": {
       "overall": 0,
       "seo": 0,
