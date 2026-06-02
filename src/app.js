@@ -29,6 +29,10 @@ const nodes = {
   summaryPain: document.querySelector('#summaryPain'),
   statusText: document.querySelector('#statusText'),
   successBox: document.querySelector('#successBox'),
+  successText: document.querySelector('#successText'),
+  reportSection: document.querySelector('#reportSection'),
+  reportStatus: document.querySelector('#reportStatus'),
+  reportShell: document.querySelector('#reportShell'),
   leadForm: document.querySelector('#leadForm'),
   painGrid: document.querySelector('#painGrid'),
 };
@@ -79,7 +83,7 @@ nodes.painGrid.addEventListener('click', (event) => {
   updatePreview();
 });
 
-nodes.leadForm.addEventListener('submit', (event) => {
+nodes.leadForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   const payload = {
     website: fields.website.value.trim(),
@@ -110,7 +114,180 @@ nodes.leadForm.addEventListener('submit', (event) => {
 
   nodes.statusText.textContent = '已创建';
   nodes.successBox.classList.remove('hidden');
+  nodes.successText.textContent = '项目已记录，AI 正在生成完整增长报告。';
+  nodes.reportSection.classList.remove('hidden');
+  nodes.reportStatus.textContent = '正在抓取网站、分析需求并生成投放素材、SEO/GEO 和合规建议...';
+  nodes.reportShell.innerHTML = '<div class="loadingBox">AI 正在生成报告，通常需要 20-60 秒。</div>';
+  nodes.reportSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
   updatePreview();
+
+  try {
+    const response = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await response.json();
+
+    if (!response.ok || !data.ok) {
+      throw new Error(data.error || 'AI 报告生成失败。');
+    }
+
+    const reports = JSON.parse(localStorage.getItem('adgeo_reports') || '[]');
+    reports.push({ brief: payload, report: data.report, createdAt: new Date().toISOString() });
+    localStorage.setItem('adgeo_reports', JSON.stringify(reports));
+
+    nodes.statusText.textContent = '已生成';
+    nodes.successText.textContent = 'AI 报告已生成，可继续复制给客户或导出整理。';
+    nodes.reportStatus.textContent = '已完成。以下内容可直接作为客户轻诊断报告初稿。';
+    renderReport(data.report);
+  } catch (error) {
+    nodes.statusText.textContent = '待配置';
+    nodes.successText.textContent = '项目已保存，但 AI 后端还未配置完成。';
+    nodes.reportStatus.textContent = error.message;
+    nodes.reportShell.innerHTML = `
+      <div class="errorBox">
+        <strong>AI 生成暂不可用</strong>
+        <p>${escapeHtml(error.message)}</p>
+        <p>本地静态服务器无法运行 Cloudflare Pages Functions。部署到 Cloudflare Pages 后，请添加 OPENAI_API_KEY 环境变量，再访问线上地址测试。</p>
+      </div>
+    `;
+  }
 });
 
 updatePreview();
+
+function renderReport(report) {
+  nodes.reportShell.innerHTML = `
+    <div class="reportCard heroReport">
+      <div>
+        <small>一句话定位</small>
+        <h3>${escapeHtml(report.summary?.productPositioning)}</h3>
+        <p>${escapeHtml(report.summary?.targetMarket)}</p>
+      </div>
+      <span class="riskBadge">${escapeHtml(report.summary?.riskLevel || '待评估')}风险</span>
+    </div>
+
+    ${section('产品分析', [
+      kv('产品类型', report.productAnalysis?.productType),
+      list('核心卖点', report.productAnalysis?.coreSellingPoints),
+      list('目标用户', report.productAnalysis?.targetUsers),
+      list('购买动机', report.productAnalysis?.purchaseMotivations),
+      list('转化问题', report.productAnalysis?.conversionProblems),
+    ])}
+
+    ${section('本地化策略', [
+      kv('目标国家', report.localization?.country),
+      list('用户习惯', report.localization?.userHabits),
+      list('表达风格', report.localization?.preferredTone),
+      list('视觉方向', report.localization?.visualDirection),
+      list('需要避免', report.localization?.avoid),
+    ])}
+
+    ${section('广告投放策略', [
+      cards('投放角度', report.adStrategy?.angles, (item) => `${strong(item.name)}${para(item.message)}${small(item.bestFor)}`),
+      cards('广告文案', report.adStrategy?.adCopies, (item) => `${strong(item.title)}${para(item.body)}${small(`${item.cta} / ${item.angle}`)}`),
+      cards('素材方向', report.adStrategy?.creativeDirections, (item) => `${strong(item.name)}${para(item.imagePrompt)}${small(item.headline || item.note)}`),
+    ])}
+
+    ${section('短视频脚本', [
+      cards('脚本', report.videoScripts, (item) => `
+        ${strong(item.name)}
+        ${small(item.duration)}
+        ${para(`Hook：${item.hook}`)}
+        ${listHtml(item.scenes || [])}
+        ${para(item.voiceover)}
+        ${small(item.cta)}
+      `),
+    ])}
+
+    ${section('广告合规与账户建议', [
+      kv('风险等级', report.compliance?.riskLevel),
+      list('主要风险', report.compliance?.risks),
+      list('不建议表达', report.compliance?.unsafeClaims),
+      list('替代表达', report.compliance?.safeAlternatives),
+      list('账户建议', report.compliance?.accountAdvice),
+    ])}
+
+    ${section('落地页优化', [
+      list('首屏', report.landingPage?.aboveFold),
+      list('信任背书', report.landingPage?.trustSignals),
+      list('CTA', report.landingPage?.cta),
+      list('移动端', report.landingPage?.mobile),
+    ])}
+
+    ${section('SEO 建议', [
+      list('关键词', report.seo?.keywords),
+      kv('Title', report.seo?.title),
+      kv('Meta Description', report.seo?.metaDescription),
+      list('内容选题', report.seo?.contentTopics),
+      list('技术优化', report.seo?.technicalFixes),
+    ])}
+
+    ${section('GEO/AI 搜索优化', [
+      kv('品牌实体定义', report.geo?.entityDefinition),
+      list('FAQ', report.geo?.faq),
+      list('对比页', report.geo?.comparisonPages),
+      list('Schema', report.geo?.schema),
+      list('引用源', report.geo?.citationSources),
+    ])}
+
+    ${section('下一步执行', [
+      list('优先动作', report.nextSteps),
+    ])}
+  `;
+}
+
+function section(title, blocks) {
+  return `
+    <article class="reportCard">
+      <h3>${escapeHtml(title)}</h3>
+      <div class="reportBlocks">${blocks.filter(Boolean).join('')}</div>
+    </article>
+  `;
+}
+
+function kv(label, value) {
+  if (!value) return '';
+  return `<div class="reportBlock"><small>${escapeHtml(label)}</small><p>${escapeHtml(value)}</p></div>`;
+}
+
+function list(label, items) {
+  if (!items?.length) return '';
+  return `<div class="reportBlock"><small>${escapeHtml(label)}</small>${listHtml(items)}</div>`;
+}
+
+function listHtml(items) {
+  return `<ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`;
+}
+
+function cards(label, items, renderer) {
+  if (!items?.length) return '';
+  return `
+    <div class="reportBlock full">
+      <small>${escapeHtml(label)}</small>
+      <div class="miniCards">${items.map((item) => `<div class="miniCard">${renderer(item)}</div>`).join('')}</div>
+    </div>
+  `;
+}
+
+function strong(value) {
+  return `<strong>${escapeHtml(value)}</strong>`;
+}
+
+function para(value) {
+  return value ? `<p>${escapeHtml(value)}</p>` : '';
+}
+
+function small(value) {
+  return value ? `<small>${escapeHtml(value)}</small>` : '';
+}
+
+function escapeHtml(value) {
+  return String(value || '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}

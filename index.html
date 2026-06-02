@@ -227,10 +227,19 @@
             </div>
             <div class="successBox hidden" id="successBox">
               <span>✓</span>
-              <span>项目已记录。下一步可接入表单后端、飞书/Notion、邮件通知或 CRM。</span>
+              <span id="successText">项目已记录，AI 正在生成完整增长报告。</span>
             </div>
           </aside>
         </div>
+      </section>
+
+      <section class="section reportSection hidden" id="reportSection">
+        <div class="sectionTitle">
+          <p class="eyebrow">AI 交付结果</p>
+          <h2>海外增长诊断报告</h2>
+          <p id="reportStatus">等待生成。</p>
+        </div>
+        <div class="reportShell" id="reportShell"></div>
       </section>
 
       <section class="section workflow" id="workflow">
