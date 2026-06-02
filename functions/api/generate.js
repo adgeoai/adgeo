@@ -1,4 +1,4 @@
-const OPENAI_URL = 'https://api.openai.com/v1/responses';
+const DEFAULT_OPENAI_BASE_URL = 'https://api.openai.com/v1';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -106,9 +106,10 @@ function htmlToText(html) {
 
 async function generateReport({ brief, websiteText, apiKey, env }) {
   const model = env.OPENAI_MODEL || 'gpt-4.1-mini';
+  const baseUrl = (env.OPENAI_BASE_URL || DEFAULT_OPENAI_BASE_URL).replace(/\/$/, '');
   const input = buildPrompt(brief, websiteText);
 
-  const response = await fetch(OPENAI_URL, {
+  const response = await fetch(`${baseUrl}/responses`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${apiKey}`,
